@@ -4,7 +4,7 @@ Software Simplified Technical English (SSTE) is a controlled-English standard fo
 software engineering, development, delivery, operations, and work tracking.
 
 The current edition is **SSTE 1.0 (2026)**. Read the normative specification in
-[SSTE-1.0.md](SSTE-1.0.md).
+[SSTE.md](https://github.com/Reason0x6/SSTE/blob/main/SSTE.md)
 
 SSTE is designed for:
 
