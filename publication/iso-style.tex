@@ -1,0 +1,33 @@
+% ISO-inspired publication layout for SSTE. This is not an ISO-issued template.
+\usepackage{fontspec}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+
+\definecolor{SSTEBlue}{HTML}{005A84}
+\definecolor{SSTEGray}{HTML}{4D4D4D}
+
+\setmainfont{Latin Modern Sans}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Mono}[Scale=0.88]
+\renewcommand{\familydefault}{\sfdefault}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt minus 1pt}
+\setlength{\emergencystretch}{2em}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small SSTE 1.0:2026}
+\fancyhead[R]{\small Software Simplified Technical English}
+\fancyfoot[L]{\small First edition}
+\fancyfoot[R]{\small Page \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\AtBeginDocument{%
+  \hypersetup{bookmarksnumbered=true,bookmarksopen=true}%
+}

@@ -1,10 +1,16 @@
 # Software Simplified Technical English
 
+Canonical repository: <https://github.com/Reason0x6/SSTE>
+
 Software Simplified Technical English (SSTE) is a controlled-English standard for
 software engineering, development, delivery, operations, and work tracking.
 
 The current edition is **SSTE 1.0 (2026)**. Read the normative specification in
-[SSTE.md](https://github.com/Reason0x6/SSTE/blob/main/SSTE.md)
+[SSTE-1.0.md](SSTE-1.0.md).
+
+GitHub Actions builds the specification as an A4, PDF/A-2b archival document.
+See [publication/README.md](publication/README.md) for the publication process
+and the exact scope of the ISO conformance claim.
 
 SSTE is designed for:
 
@@ -25,4 +31,3 @@ names may be trademarks of their respective owners.
 Declare the edition, profile, and level, for example:
 
 > This runbook conforms to SSTE 1.0, Procedure profile, Level 2.
-

@@ -1,0 +1,34 @@
+---
+title: "Software Simplified Technical English (SSTE)"
+subtitle: "Standard 1.0 — 2026 Edition"
+author: "SSTE Project"
+date: "2026"
+lang: "en"
+subject: "Controlled natural language for software engineering and operations"
+rights: "Published by the SSTE Project — https://github.com/Reason0x6/SSTE"
+keywords:
+  - controlled English
+  - software engineering
+  - DevOps
+  - technical communication
+  - ticketing
+documentclass: article
+papersize: a4
+fontsize: 10pt
+geometry:
+  - top=25mm
+  - bottom=25mm
+  - left=25mm
+  - right=20mm
+colorlinks: true
+linkcolor: SSTEBlue
+urlcolor: SSTEBlue
+toccolor: black
+header-includes: |
+  \hypersetup{
+    pdftitle={Software Simplified Technical English (SSTE) 1.0},
+    pdfauthor={SSTE Project},
+    pdfsubject={Controlled natural language standard for software engineering},
+    pdfkeywords={SSTE, controlled English, software engineering, DevOps}
+  }
+---

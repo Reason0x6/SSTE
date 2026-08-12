@@ -1,0 +1,87 @@
+name: Build standards PDF
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "SSTE-1.0.md"
+      - "publication/**"
+      - ".github/workflows/build-standard-pdf.yml"
+  pull_request:
+    paths:
+      - "SSTE-1.0.md"
+      - "publication/**"
+      - ".github/workflows/build-standard-pdf.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build and validate PDF/A-2b
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out the source
+        uses: actions/checkout@v6
+
+      - name: Build the publication image
+        run: docker build --tag sste-publication:3.10 publication
+
+      - name: Build the PDF
+        run: |
+          docker run --rm \
+            --volume "$GITHUB_WORKSPACE:/data" \
+            --workdir /data \
+            sste-publication:3.10 \
+            SSTE-1.0.md \
+            --from=gfm+smart \
+            --to=pdf \
+            --pdf-engine=lualatex \
+            --template=publication/pandoc-pdfa.tex \
+            --metadata-file=publication/metadata.yml \
+            --include-in-header=publication/iso-style.tex \
+            --toc \
+            --toc-depth=3 \
+            --top-level-division=section \
+            --output=SSTE-1.0.pdf
+
+      - name: Check the generated file
+        run: |
+          test -s SSTE-1.0.pdf
+          file SSTE-1.0.pdf
+
+      - name: Install veraPDF 1.30.2
+        env:
+          VERAPDF_URL: https://software.verapdf.org/rel/1.30/verapdf-greenfield-1.30.2-installer.zip
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 --output /tmp/verapdf.zip "$VERAPDF_URL"
+          unzip -q /tmp/verapdf.zip -d /tmp/verapdf-installer
+          installer_jar="$(find /tmp/verapdf-installer -type f -name '*.jar' -print -quit)"
+          test -n "$installer_jar"
+          java -jar "$installer_jar" publication/verapdf-auto-install.xml
+          test -x /tmp/verapdf/verapdf
+
+      - name: Validate ISO 19005-2 conformance
+        run: |
+          set -euo pipefail
+          /tmp/verapdf/verapdf --flavour 2b --format text SSTE-1.0.pdf \
+            | tee verapdf-report.txt
+          grep -Eq 'PASS|compliant="1"|isCompliant.?true' verapdf-report.txt
+
+      - name: Create checksums
+        run: sha256sum SSTE-1.0.pdf > SSTE-1.0.pdf.sha256
+
+      - name: Upload validated publication
+        uses: actions/upload-artifact@v7
+        with:
+          name: SSTE-1.0-PDF-A-2b
+          path: |
+            SSTE-1.0.pdf
+            SSTE-1.0.pdf.sha256
+            verapdf-report.txt
+          if-no-files-found: error
+          retention-days: 90
