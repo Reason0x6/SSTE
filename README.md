@@ -1,7 +1,5 @@
 # Software Simplified Technical English
 
-Canonical repository: <https://github.com/Reason0x6/SSTE>
-
 Software Simplified Technical English (SSTE) is a controlled-English standard for
 software engineering, development, delivery, operations, and work tracking.
 
