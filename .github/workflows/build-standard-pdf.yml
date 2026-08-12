@@ -85,3 +85,29 @@ jobs:
             verapdf-report.txt
           if-no-files-found: error
           retention-days: 90
+
+  release:
+    name: Publish PDF release
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download validated publication
+        uses: actions/download-artifact@v8
+        with:
+          name: SSTE-1.0-PDF-A-2b
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: build-${{ github.run_number }}
+        run: |
+          gh release create "$RELEASE_TAG" \
+            SSTE-1.0.pdf \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --title "SSTE 1.0 (build ${{ github.run_number }})" \
+            --generate-notes
